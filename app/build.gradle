@@ -23,9 +23,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding {
-        enabled = true
-    }
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8
@@ -36,7 +33,10 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation project(':xxf_http')
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.google.code.gson:gson:2.8.2'
+    //api 'com.github.NBXXF:xxf_android_http:2.3.0'
+    compileOnly 'com.android.support:support-annotations:27.0.0'
+    implementation 'com.android.support:support-annotations:27.0.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.12'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
