@@ -1,5 +1,0 @@
-<resources>
-    <string name="app_name">loading</string>
-    <string name="alpha_default_no_data">没有数据</string>
-    <string name="alpha_default_load_error">加载失败</string>
-</resources>

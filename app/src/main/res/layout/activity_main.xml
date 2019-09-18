@@ -11,26 +11,4 @@
         android:padding="10dp"
         android:text="test" />
 
-    <Button
-        android:id="@+id/bt_permission_req"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="permission_req" />
-
-
-    <Button
-        android:id="@+id/bt_permission_get"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="permission_get" />
-
-
-    <Button
-        android:id="@+id/bt_startActivityForResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="startActivityForResult" />
 </LinearLayout>

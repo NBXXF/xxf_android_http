@@ -1,0 +1,21 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        minSdkVersion 14
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.aar'], dir: 'aars')
+    compileOnly 'io.reactivex.rxjava2:rxjava:2.2.8'
+    compileOnly 'com.squareup.retrofit2:retrofit:2.5.0'
+    compileOnly 'com.google.code.gson:gson:2.8.2'
+}
