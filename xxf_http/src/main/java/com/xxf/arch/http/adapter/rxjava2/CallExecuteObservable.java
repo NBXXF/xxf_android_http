@@ -27,11 +27,13 @@ final class CallExecuteObservable<T> extends Observable<Response<T>> {
     private final Call<T> originalCall;
     private RxHttpCache rxHttpCache;
     private com.xxf.arch.annotation.RxHttpCache.CacheType rxCacheType;
+    boolean readCache;
 
     CallExecuteObservable(Call<T> originalCall, RxHttpCache rxHttpCache, com.xxf.arch.annotation.RxHttpCache.CacheType rxCacheType) {
         this.originalCall = originalCall;
         this.rxHttpCache = rxHttpCache;
         this.rxCacheType = rxCacheType;
+        this.readCache = this.rxCacheType != com.xxf.arch.annotation.RxHttpCache.CacheType.onlyRemote;
     }
 
     @Override
@@ -43,6 +45,7 @@ final class CallExecuteObservable<T> extends Observable<Response<T>> {
         if (disposable.isDisposed()) {
             return;
         }
+        boolean readCache = this.rxCacheType != com.xxf.arch.annotation.RxHttpCache.CacheType.onlyRemote;
         switch (this.rxCacheType) {
             case firstCache: {
                 //先拿缓存 onNext一次
@@ -55,12 +58,12 @@ final class CallExecuteObservable<T> extends Observable<Response<T>> {
                     e.printStackTrace();
                 } finally {
                     //执行网络请求
-                    executeCall(observer, call, disposable, false);
+                    executeCall(observer, call, disposable);
                 }
             }
             break;
             case firstRemote: {
-                executeCall(observer, call, disposable, true);
+                executeCall(observer, call, disposable);
             }
             break;
             case onlyCache: {
@@ -86,7 +89,7 @@ final class CallExecuteObservable<T> extends Observable<Response<T>> {
                         observer.onNext(response);
                         observer.onComplete();
                     } else {
-                        executeCall(observer, call, disposable, false);
+                        executeCall(observer, call, disposable);
                     }
                 } catch (Throwable e) {
                     e.printStackTrace();
@@ -100,11 +103,11 @@ final class CallExecuteObservable<T> extends Observable<Response<T>> {
             }
             break;
             case onlyRemote: {
-                executeCall(observer, call, disposable, false);
+                executeCall(observer, call, disposable);
             }
             break;
             default: {
-                executeCall(observer, call, disposable, false);
+                executeCall(observer, call, disposable);
             }
             break;
         }
@@ -123,7 +126,7 @@ final class CallExecuteObservable<T> extends Observable<Response<T>> {
         }
     }
 
-    private void executeCall(Observer<? super Response<T>> observer, Call<T> call, CallDisposable disposable, boolean readCache) {
+    private void executeCall(Observer<? super Response<T>> observer, Call<T> call, CallDisposable disposable) {
         boolean terminated = false;
         try {
             Response<T> response = null;

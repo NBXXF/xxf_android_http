@@ -5,10 +5,45 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/bt_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:padding="10dp"
+        android:text="清理缓存" />
+
+    <Button
         android:id="@+id/bt_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="test" />
+        android:text="test_default(only_remote)" />
 
+    <Button
+        android:id="@+id/bt_test_first_cache"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="test_first_cache" />
+
+    <Button
+        android:id="@+id/bt_test_first_remote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="test_first_remote" />
+
+    <Button
+        android:id="@+id/bt_test_only_cache"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="test_only_cache" />
+
+    <Button
+        android:id="@+id/bt_test_if_cache"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="test_if_cache" />
 </LinearLayout>

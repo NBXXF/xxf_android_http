@@ -28,18 +28,19 @@ final class CallEnqueueObservable<T> extends Observable<Response<T>> {
     private final Call<T> originalCall;
     private RxHttpCache rxHttpCache;
     private com.xxf.arch.annotation.RxHttpCache.CacheType rxCacheType;
-
+    boolean readCache;
     CallEnqueueObservable(Call<T> originalCall, RxHttpCache rxHttpCache, com.xxf.arch.annotation.RxHttpCache.CacheType rxCacheType) {
         this.originalCall = originalCall;
         this.rxHttpCache = rxHttpCache;
         this.rxCacheType = rxCacheType;
+        this.readCache = this.rxCacheType != com.xxf.arch.annotation.RxHttpCache.CacheType.onlyRemote;
     }
 
     @Override
     protected void subscribeActual(Observer<? super Response<T>> observer) {
         // Since Call is a one-shot type, clone it for each new observer.
         Call<T> call = originalCall.clone();
-        CallCallback<T> callback = new CallCallback<>(call, observer, this.rxHttpCache, this.rxCacheType == com.xxf.arch.annotation.RxHttpCache.CacheType.firstRemote);
+        CallCallback<T> callback = new CallCallback<>(call, observer, this.rxHttpCache,this.readCache);
         observer.onSubscribe(callback);
         switch (this.rxCacheType) {
             case firstCache: {
