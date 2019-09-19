@@ -16,7 +16,7 @@ public @interface RxHttpCache {
 
     enum CacheType {
         /**
-         * 先从本地缓存拿取,然后从服务器拿取,可能会onNext两次,如果本地没有缓存 最多执行oNext一次
+         * 先从本地缓存拿取,然后从服务器拿取,可能会onNext两次,如果本地没有缓存 最少执行oNext一次
          */
         firstCache,
         /**

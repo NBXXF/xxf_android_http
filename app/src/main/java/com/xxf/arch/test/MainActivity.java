@@ -42,6 +42,11 @@ public class MainActivity extends Activity {
                                     public void accept(JsonObject jsonObject) throws Exception {
                                         Log.d("======>", "" + jsonObject);
                                     }
+                                }, new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        Log.d("======>", "err:" + throwable);
+                                    }
                                 });
                     }
                 });

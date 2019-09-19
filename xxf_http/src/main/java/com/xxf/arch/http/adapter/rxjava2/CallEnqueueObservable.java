@@ -3,17 +3,17 @@ package com.xxf.arch.http.adapter.rxjava2;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import com.xxf.arch.http.cache.RxHttpCache;
+
+import java.net.ConnectException;
+import java.net.UnknownHostException;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.exceptions.CompositeException;
 import io.reactivex.exceptions.Exceptions;
 import io.reactivex.plugins.RxJavaPlugins;
-
-import com.xxf.arch.http.cache.RxHttpCache;
-
-import java.net.ConnectException;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.OkHttpCallConvertor;
@@ -182,7 +182,8 @@ final class CallEnqueueObservable<T> extends Observable<Response<T>> {
         public void onFailure(Call<T> call, Throwable t) {
             if (call.isCanceled()) return;
             //读取缓存
-            if (t instanceof ConnectException && readCache) {
+            boolean noNet = (t instanceof ConnectException || t instanceof UnknownHostException);
+            if (noNet && readCache) {
                 Response<T> response = null;
                 try {
                     response = (Response<T>) this.rxHttpCache.get(call.request(), new OkHttpCallConvertor<T>().apply(call));

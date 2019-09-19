@@ -3,17 +3,17 @@ package com.xxf.arch.http.adapter.rxjava2;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import com.xxf.arch.http.cache.RxHttpCache;
+
+import java.net.ConnectException;
+import java.net.UnknownHostException;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.exceptions.CompositeException;
 import io.reactivex.exceptions.Exceptions;
 import io.reactivex.plugins.RxJavaPlugins;
-
-import com.xxf.arch.http.cache.RxHttpCache;
-
-import java.net.ConnectException;
-
 import retrofit2.Call;
 import retrofit2.OkHttpCallConvertor;
 import retrofit2.Response;
@@ -149,8 +149,26 @@ final class CallExecuteObservable<T> extends Observable<Response<T>> {
                 }
                 //抛出去
                 throw e;
+            } catch (UnknownHostException e) {
+                //链接错误,没网了,读取缓存
+                if (readCache) {
+                    try {
+                        response = (Response<T>) this.rxHttpCache.get(call.request(), new OkHttpCallConvertor<T>().apply(call));
+                    } catch (Throwable t) {
+                        t.printStackTrace();
+                    }
+                    //有缓存
+                    if (response != null && !disposable.isDisposed()) {
+                        observer.onNext(response);
+                        terminated = true;
+                        observer.onComplete();
+                        //不继续抛异常
+                        return;
+                    }
+                }
+                //抛出去
+                throw e;
             }
-
 
             if (!disposable.isDisposed()) {
                 observer.onNext(response);
