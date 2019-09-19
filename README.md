@@ -1,4 +1,28 @@
 # xxf http架构
+增加缓存模式
+ ```
+   /**
+         * 先从本地缓存拿取,然后从服务器拿取,可能会onNext两次,如果本地没有缓存 最少执行oNext一次
+         */
+        firstCache,
+        /**
+         * 先从服务器获取,没有网络 读取本地缓存
+         */
+        firstRemote,
+        /**
+         * 只从服务器拿取
+         */
+        onlyRemote,
+        /**
+         * 只从本地缓存中拿取,没有缓存 会抛 {@link NullPointerException}
+         */
+        onlyCache,
+
+        /**
+         * 如果本地存在就返回本地的,否则返回网络的数据
+         */
+        ifCache,
+ ```
 ##### 快速使用
  ```
     api 'com.github.NBXXF:xxf_android_http:2.4.0'
@@ -39,3 +63,31 @@
                     }
                 });
    ```
+   
+##### 全部用法 参考demo     
+  ```
+@BaseUrl("http://api.map.baidu.com/")
+@RxHttpCacheProvider(DefaultRxHttpCacheDirectoryProvider.class)
+public interface LoginApiService {
+    @GET("http://api.map.baidu.com/telematics/v3/weather?location=%E5%98%89%E5%85%B4&output=json&ak=5slgyqGDENN7Sy7pw29IUvrZ")
+    Observable<JsonObject> getCity();
+
+    @GET("http://api.map.baidu.com/telematics/v3/weather?location=%E5%98%89%E5%85%B4&output=json&ak=5slgyqGDENN7Sy7pw29IUvrZ")
+    @RxHttpCache(RxHttpCache.CacheType.firstCache)
+    Observable<JsonObject> getCityFirstCache();
+
+
+    @GET("http://api.map.baidu.com/telematics/v3/weather?location=%E5%98%89%E5%85%B4&output=json&ak=5slgyqGDENN7Sy7pw29IUvrZ")
+    @RxHttpCache(RxHttpCache.CacheType.firstRemote)
+    Observable<JsonObject> getCityFirstRemote();
+
+    @GET("http://api.map.baidu.com/telematics/v3/weather?location=%E5%98%89%E5%85%B4&output=json&ak=5slgyqGDENN7Sy7pw29IUvrZ")
+    @RxHttpCache(RxHttpCache.CacheType.ifCache)
+    Observable<JsonObject> getCityIfCache();
+
+    @GET("http://api.map.baidu.com/telematics/v3/weather?location=%E5%98%89%E5%85%B4&output=json&ak=5slgyqGDENN7Sy7pw29IUvrZ")
+    @RxHttpCache(RxHttpCache.CacheType.onlyCache)
+    Observable<JsonObject> getCityOnlyCache();
+
+}
+ ```
