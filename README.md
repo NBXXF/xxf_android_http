@@ -1,5 +1,15 @@
 # xxf http架构
-
+##### 快速使用
+ ```
+    api 'com.github.NBXXF:xxf_android_http:2.4.0'
+    
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    
+  ```
+ 
+     
 ##### http请求
       ``` 1. http接口interface声明（与retrofit十分类似)
       @BaseUrl(com.tokentm.businesscard.config.BuildConfig.API_URL) //必选;baseurl 为retrofit的基础路由,比如:http://www.baidu.com/
