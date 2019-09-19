@@ -1,4 +1,4 @@
-package com.xxf.arch.test;
+package com.xxf.arch.test.http;
 
 import android.app.Activity;
 import android.app.Application;

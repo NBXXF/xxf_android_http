@@ -1,4 +1,4 @@
-package com.xxf.arch.test;
+package com.xxf.arch.test.http;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.google.gson.JsonObject;
 import com.xxf.arch.http.XXFHttp;
-import com.xxf.arch.test.http.LoginApiService;
 
 import java.io.File;
 

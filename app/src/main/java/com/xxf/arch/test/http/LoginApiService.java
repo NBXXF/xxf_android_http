@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.xxf.arch.annotation.BaseUrl;
 import com.xxf.arch.annotation.RxHttpCache;
 import com.xxf.arch.annotation.RxHttpCacheProvider;
-import com.xxf.arch.test.DefaultRxHttpCacheDirectoryProvider;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
