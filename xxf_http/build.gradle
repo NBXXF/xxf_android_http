@@ -3,7 +3,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 android {
     compileSdkVersion 27
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 21
     }
 }
 
@@ -11,7 +11,7 @@ dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     api fileTree(include: ['*.aar'], dir: 'aars')
     compileOnly 'com.android.support:support-annotations:27.0.0'
-    compileOnly 'io.reactivex.rxjava2:rxjava:2.2.12'
-    compileOnly 'com.squareup.retrofit2:retrofit:2.6.1'
-    compileOnly 'com.google.code.gson:gson:2.8.5'
+    api 'io.reactivex.rxjava2:rxjava:2.2.12'
+    api 'com.squareup.retrofit2:retrofit:2.6.1'
+    api 'com.google.code.gson:gson:2.8.5'
 }

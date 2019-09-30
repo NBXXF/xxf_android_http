@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.xxf.arch.test"
-        minSdkVersion 20
+        minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -34,8 +34,4 @@ dependencies {
 
     implementation project(':xxf_http')
     //api 'com.github.NBXXF:xxf_android_http:2.3.0'
-    compileOnly 'com.android.support:support-annotations:27.0.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.12'
-    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
-    implementation 'com.google.code.gson:gson:2.8.5'
 }

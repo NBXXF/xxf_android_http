@@ -25,12 +25,7 @@
  ```
 ##### 快速使用
  ```
-    api 'com.github.NBXXF:xxf_android_http:2.4.0'
-    
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.google.code.gson:gson:2.8.2'
-    
+    api 'com.github.NBXXF:xxf_android_http:2.4.5'  
   ```
  
      
