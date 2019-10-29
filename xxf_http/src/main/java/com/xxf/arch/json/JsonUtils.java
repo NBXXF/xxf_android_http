@@ -6,12 +6,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
-import com.xxf.arch.json.text.StringEscapeUtils;
 
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * ClassName JsonUtils
@@ -63,7 +63,7 @@ public class JsonUtils {
     }
 
     public static <T> T toBean(String json, Type typeOfT) throws JsonParseException {
-        return gson.fromJson(StringEscapeUtils.unescapeJson(json), typeOfT);
+        return gson.fromJson(json, typeOfT);
     }
 
     public static <T> T toBean(JsonElement json, Type typeOfT) throws JsonParseException {
@@ -71,7 +71,7 @@ public class JsonUtils {
     }
 
     public static <T> T toBean(String json, Class<T> tClass) throws JsonParseException {
-        return gson.fromJson(StringEscapeUtils.unescapeJson(json), tClass);
+        return gson.fromJson(json, tClass);
     }
 
     public static <T> T toBean(JsonElement json, Class<T> tClass) throws JsonParseException {
@@ -79,14 +79,14 @@ public class JsonUtils {
     }
 
     public static <T> List<T> toBeanList(String json, TypeToken<List<T>> typeToken) throws JsonParseException {
-        return gson.fromJson(StringEscapeUtils.unescapeJson(json), typeToken.getType());
+        return gson.fromJson(json, typeToken.getType());
     }
 
     public static <T> List<T> toBeanList(String json, Class<T> classz) throws JsonParseException {
-        T[] arr = gson.fromJson(StringEscapeUtils.unescapeJson(json), TypeToken.getArray(classz).getType());
+        T[] arr = gson.fromJson(json, TypeToken.getArray(classz).getType());
         return Arrays.asList(arr);
       /*  List<T> lst = new ArrayList<T>();
-        JsonArray array = new JsonParser().parse(StringEscapeUtils.unescapeJson(json)).getAsJsonArray();
+        JsonArray array = new JsonParser().parse(json).getAsJsonArray();
         for (final JsonElement elem : array) {
             lst.add(gson.fromJson(elem, classz));
         }
@@ -94,7 +94,7 @@ public class JsonUtils {
     }
 
     public static <T> Map<String, T> toMap(String json, TypeToken<Map<String, T>> typeToken) throws JsonParseException {
-        return gson.fromJson(StringEscapeUtils.unescapeJson(json), typeToken.getType());
+        return gson.fromJson(json, typeToken.getType());
     }
 
 }
