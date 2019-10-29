@@ -1,6 +1,5 @@
 package com.xxf.arch.test.http;
 
-import android.support.annotation.NonNull;
 
 import com.xxf.arch.http.cache.HttpCacheDirectoryProvider;
 
@@ -12,7 +11,6 @@ import java.io.File;
  */
 public class DefaultRxHttpCacheDirectoryProvider implements HttpCacheDirectoryProvider {
 
-    @NonNull
     @Override
     public String getDirectory() {
         File file = new File(BaseApplication.getInstance().getCacheDir(), "okHttpCache");

@@ -5,11 +5,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.xxf.arch.json.text.StringEscapeUtils;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +49,8 @@ public class JsonUtils {
     }
 
     public static String toJsonString(Object object) throws JsonParseException {
-        return gson.toJson(object);
+        //⚠️ 有转义字符了 增加了引号,不建议用gson.toJson(object);
+        return toJsonElement(object).toString();
     }
 
     public static String toJsonStringSafe(Object object) {
@@ -62,7 +63,7 @@ public class JsonUtils {
     }
 
     public static <T> T toBean(String json, Type typeOfT) throws JsonParseException {
-        return gson.fromJson(json, typeOfT);
+        return gson.fromJson(StringEscapeUtils.unescapeJson(json), typeOfT);
     }
 
     public static <T> T toBean(JsonElement json, Type typeOfT) throws JsonParseException {
@@ -70,7 +71,7 @@ public class JsonUtils {
     }
 
     public static <T> T toBean(String json, Class<T> tClass) throws JsonParseException {
-        return gson.fromJson(json, tClass);
+        return gson.fromJson(StringEscapeUtils.unescapeJson(json), tClass);
     }
 
     public static <T> T toBean(JsonElement json, Class<T> tClass) throws JsonParseException {
@@ -78,20 +79,22 @@ public class JsonUtils {
     }
 
     public static <T> List<T> toBeanList(String json, TypeToken<List<T>> typeToken) throws JsonParseException {
-        return gson.fromJson(json, typeToken.getType());
+        return gson.fromJson(StringEscapeUtils.unescapeJson(json), typeToken.getType());
     }
 
     public static <T> List<T> toBeanList(String json, Class<T> classz) throws JsonParseException {
-        List<T> lst = new ArrayList<T>();
-        JsonArray array = new JsonParser().parse(json).getAsJsonArray();
+        T[] arr = gson.fromJson(StringEscapeUtils.unescapeJson(json), TypeToken.getArray(classz).getType());
+        return Arrays.asList(arr);
+      /*  List<T> lst = new ArrayList<T>();
+        JsonArray array = new JsonParser().parse(StringEscapeUtils.unescapeJson(json)).getAsJsonArray();
         for (final JsonElement elem : array) {
             lst.add(gson.fromJson(elem, classz));
         }
-        return lst;
+        return lst;*/
     }
 
     public static <T> Map<String, T> toMap(String json, TypeToken<Map<String, T>> typeToken) throws JsonParseException {
-        return gson.fromJson(json, typeToken.getType());
+        return gson.fromJson(StringEscapeUtils.unescapeJson(json), typeToken.getType());
     }
 
 }

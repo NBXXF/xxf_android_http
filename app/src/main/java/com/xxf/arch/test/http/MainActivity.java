@@ -5,10 +5,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.xxf.arch.http.XXFHttp;
+import com.xxf.arch.json.JsonUtils;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -42,6 +47,15 @@ public class MainActivity extends Activity {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        String s = "[1,2,3,4]";
+                        JsonElement jsonElement = JsonUtils.toJsonElement(s);
+                        Log.d("==============>", jsonElement.toString());
+
+                        List<Integer> list = JsonUtils.toBeanList(s, new TypeToken<List<Integer>>() {
+                        });
+                        Log.d("==============>1:", Arrays.toString(list.toArray()));
+                        List<Integer> list2 = JsonUtils.toBeanList(s, Integer.class);
+                        Log.d("==============>2:", Arrays.toString(list2.toArray()));
                         File file = new File(BaseApplication.getInstance().getCacheDir(), "okHttpCache");
                         deleteDir(file);
                     }
