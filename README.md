@@ -25,7 +25,7 @@
  ```
 ##### 快速使用
  ```
-    api 'com.github.NBXXF:xxf_android_http:2.4.5'  
+    api 'com.github.NBXXF:xxf_android_http:2.5.0'  
   ```
  
      
