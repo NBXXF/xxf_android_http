@@ -7,17 +7,16 @@ import java.io.IOException;
 
 import okhttp3.MultipartBody;
 import retrofit2.Converter;
-import retrofit2.http.PartMap;
 
 /**
  * @author youxuan  E-mail:xuanyouwu@163.com
- * @Description
+ * @Description 文件file 支持 直接传递form
  */
 public class FileRequestBodyConverter<T extends File> implements Converter<T, MultipartBody.Part> {
 
 
     @Override
     public MultipartBody.Part convert(T file) throws IOException {
-        return MultipartBody.Part.create(RequestUtils.createFormBody(file));
+        return MultipartBody.Part.create(RequestUtils.createFileBody(file));
     }
 }

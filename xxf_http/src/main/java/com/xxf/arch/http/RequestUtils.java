@@ -3,11 +3,13 @@ package com.xxf.arch.http;
 import android.text.TextUtils;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 
 /**
  * Description
@@ -44,46 +46,12 @@ public class RequestUtils {
     }
 
     /**
-     * 构建媒体流请求key
-     *
-     * @param file
-     * @return
-     */
-    public static String createStreamKey(File file) {
-        if (file != null && file.exists()) {
-            return "file\"; filename=\"" + file.getName();
-        }
-        return "file\"; filename=\"";
-    }
-
-    /**
-     * 构建媒体流请求key
-     *
-     * @param fileName
-     * @return
-     */
-    public static String createStreamKey(String fileName) {
-        return "file\"; filename=\"" + fileName;
-    }
-
-
-    /**
-     * 构建媒体流请求key
-     *
-     * @param fileName
-     * @return
-     */
-    public static String createStreamKey(String description, String fileName) {
-        return description + "\"; filename=\"" + fileName;
-    }
-
-    /**
      * 构建表单请求体
      *
      * @param file
      * @return
      */
-    public static RequestBody createFormBody(File file) {
+    public static RequestBody createFileBody(File file) {
         if (file != null && file.exists()) {
             return RequestBody.create(MediaType.parse("multipart/form-data"), file);
         }
@@ -93,14 +61,42 @@ public class RequestUtils {
     /**
      * 构建表单请求体
      *
+     * @param file
      * @return
      */
-    public static RequestBody createFormBody(byte[] bytes) {
+    public static MultipartBody.Part createFileBody(String formKey, File file) {
+        if (file != null && file.exists()) {
+            return MultipartBody.Part.createFormData(formKey, file.getName(), RequestUtils.createFileBody(file));
+        }
+        return null;
+    }
+
+    /**
+     * 构建表单请求体
+     *
+     * @param formKey
+     * @param files
+     * @return
+     */
+    public static Map<String, RequestBody> createFileBody(String formKey, List<File> files) {
+        Map<String, RequestBody> fileBodyMaps = new HashMap<>();
+        for (File file : files) {
+            String key = formKey + "\"; filename=\"" + file.getName();
+            fileBodyMaps.put(key, createFileBody(file));
+        }
+        return fileBodyMaps;
+    }
+
+    /**
+     * 构建表单请求体
+     *
+     * @return
+     */
+    public static RequestBody createFileBody(byte[] bytes) {
         if (bytes == null) {
             bytes = new byte[0];
         }
         return RequestBody.create(MediaType.parse("multipart/form-data"), bytes);
-
     }
 
     /**
