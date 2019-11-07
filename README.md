@@ -1,3 +1,8 @@
+# Deprecated  Deprecated  Deprecated
+ 最新 参考 https://github.com/NBXXF/xxf_android
+ 
+or use  implementation 'com.github.NBXXF.xxf_android:xxf_http:2.5.x'
+
 # xxf http架构
 增加缓存模式
  ```
